@@ -24,7 +24,7 @@ public class Elevator {
     
     // basic contructor for initializing basic variables to default when the
     //  elevator is created.
-    public Elevator(String id, int floors){
+    protected Elevator(String id, int floors){
         elevatorID = id;
         maxFloors = floors;
         curFloor = 1;
@@ -33,7 +33,7 @@ public class Elevator {
     }
     
     // overloaded constructor to start elevator at floor other than 1st
-    public Elevator(String id, int floors, int startFloor){
+    protected Elevator(String id, int floors, int startFloor){
         elevatorID = id;
         maxFloors = floors;
         curFloor = startFloor;
@@ -42,23 +42,23 @@ public class Elevator {
     }
     
     // allows the elevator to be set to maintenance mode
-    public void setStatus(ElevatorStatus newStatus){
+    protected void setStatus(ElevatorStatus newStatus){
         status = newStatus;
         curFloor = 1;
     }
     
     // adds to the total floors for this elevators lifetime.
-    public void addTotalFloors(){
+    protected void addTotalFloors(){
         totalFloors++;
     }
     
     // adds to the total lifetime requests for this elevator.
-    public void addTotalRequests(){
+    protected void addTotalRequests(){
         totalRequests++;
     }
     
     // allows us to get an elevators status directly
-    public ElevatorStatus getStatus(){
+    protected ElevatorStatus getStatus(){
         if (status != ElevatorStatus.Maintenance){
             if (nextFloors.isEmpty()){
                 status = ElevatorStatus.Standing;
@@ -70,17 +70,17 @@ public class Elevator {
     }
     
     // holds the total floors traveled during this elevators "lifetime".
-    public int getTotalFloors(){
+    protected int getTotalFloors(){
         return totalFloors;
     }
     
     // holds the total requests for this elevator over "lifetiem".
-    public int getTotalRequests(){
+    protected int getTotalRequests(){
         return totalRequests;
     }
     
     // this will give us the next floor the elevator is headed to
-    public int nextFloor(){
+    protected int nextFloor(){
         if (nextFloors.size() > 0){ // has a floor in the queue
             return nextFloors.peek();
         } else{  // does not have a floor in the queue
@@ -89,38 +89,38 @@ public class Elevator {
     }
     
     // used to report all floors in the queue.
-    public Queue<Integer> getFloors(){
+    protected Queue<Integer> getFloors(){
         return nextFloors;
     }
     
     // this gives us back the floor the elevator is currently on
-    public int getCurrentFloor(){
+    protected int getCurrentFloor(){
         return curFloor;
     }
     
     // this will move the elevator up a floor and add to overall floor count
-    public void floorUp(){
+    protected void floorUp(){
         curFloor++;
         addTotalFloors();
     }
     
     // this will move the elevator down a floor and add to overall floor count
-    public void floorDown(){
+    protected void floorDown(){
         curFloor--;
         addTotalFloors();
     }
         
     // this will add a floor to the queue when a button is pushed
-    public void addFloorRequest(int newFloor){
+    protected void addFloorRequest(int newFloor){
         nextFloors.add(newFloor);
     }
     
     // this will remove the last floor the elevator stopped at
-    public void removeFloorVisited(){
+    protected void removeFloorVisited(){
         nextFloors.remove();
     }
     
-    public ElevatorDirection getDirection(){
+    protected ElevatorDirection getDirection(){
         if (nextFloors.size() > 0){
             if (curFloor < nextFloor()){
                 return ElevatorDirection.Up;
@@ -134,7 +134,7 @@ public class Elevator {
     
     // takes current floor from the elevator or compares it to the requested floor.
     // this tells us where the floor is in relation to the elevator.
-    public FloorRelationToElevator getFloorToElevator(int floor){
+    protected FloorRelationToElevator getFloorToElevator(int floor){
         if (curFloor < floor){
             return FloorRelationToElevator.Above;
         }
@@ -148,7 +148,7 @@ public class Elevator {
     
     // looks at which way the elevator has to move and decides the number of
     //  floors to moved based on the direction.
-    public int nbrFloorsToMove(int floor){
+    protected int nbrFloorsToMove(int floor){
         FloorRelationToElevator direction = getFloorToElevator(floor);
         switch (direction){
             case Above:

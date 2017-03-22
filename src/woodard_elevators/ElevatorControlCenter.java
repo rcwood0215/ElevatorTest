@@ -23,7 +23,7 @@ public class ElevatorControlCenter {
     private ArrayList<Elevator> tempElevators;
     
     // initialize elevator control center with the numbe of floors and elevators
-    public ElevatorControlCenter(int maxElevators, int maxFloors){
+    protected ElevatorControlCenter(int maxElevators, int maxFloors){
         
         // initialize building elevator list
         elevators = new ArrayList<>();
@@ -33,12 +33,12 @@ public class ElevatorControlCenter {
     }
     
     // Creates elevators based on total elevators in the system.
-    public ArrayList<Elevator> getElevators(){
+    protected ArrayList<Elevator> getElevators(){
         return elevators;
     }
     
     // used at floor level (external control) to call the elevator
-    public void callElevator(int floor){
+    protected void callElevator(int floor){
         Elevator elevator;
         int index = getElevatorIndex();
         elevator = elevators.get(index);
@@ -69,7 +69,7 @@ public class ElevatorControlCenter {
     
     // sets an elevator to maitenance mode and moves the elevators queue to an
     //  elevator that is functioning.
-    public void setStatusMaintenance(int index){
+    protected void setStatusMaintenance(int index){
         ElevatorStatus status = ElevatorStatus.Maintenance;
         Elevator elevatorOld = elevators.get(index);
         elevatorOld.setStatus(status);        
@@ -95,7 +95,7 @@ public class ElevatorControlCenter {
     }
     
     // used inside the elevator (internal control) to select floors.
-    public void requestFloor(int currentElevator, int floor){
+    protected void requestFloor(int currentElevator, int floor){
         if (elevators.get(currentElevator).status == ElevatorStatus.Maintenance) {
             System.out.println("Sorry, you must use another elevator.");
         } else {
